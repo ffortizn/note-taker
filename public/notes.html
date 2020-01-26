@@ -56,37 +56,34 @@
   <script type="text/javascript">
 
     $(document).ready(function () {
-
-
-
-      const myDiv = ``;
-
-      $.get('/api/notes', function (data) {
+      $.get("/api/notes/", function (data) {
         data.forEach(element => {
-          myDiv = myDiv +  `<li><b>${data.title}:<b><br>${data.text}<br><a href="/api/notes/${data.id}"> DELETE </a></li>`
+          $("#notes-list").append('<li><hr><b>' + 'Title:' + element.title + '<b><br>Description: ' + element.text + '<br><a href="/api/notes/' + element.id + '"> DELETE </a><br></li>');
         });
-        console.log(myDiv);
-        $("#notes-list").append(myDiv);
+        console.log($("#notes-list").val());
+        // $("#notes-list").append(myDiv);
       });
 
 
 
     });
 
-    $("#add-btn").on("click", function (event) {
-        event.preventDefault();
-        var newNote = {
-          title: $("#note-title").val().trim(),
-          text: $("#note-text").val().trim()
-        };
 
-        // Question: What does this code do??
-        $.post('/api/notes', newNote)
-          .then(function (data) {
-            console.info("Adding note", data);
-            alert("Adding note");
-          });
-      });
+
+    $("#add-btn").on("click", function (event) {
+      event.preventDefault();
+      var newNote = {
+        title: $("#note-title").val().trim(),
+        text: $("#note-text").val().trim()
+      };
+
+      // Question: What does this code do??
+      $.post('/api/notes', newNote)
+        .then(function (data) {
+          console.info("Adding note", data);
+          alert("Adding note");
+        });
+    });
 
   </script>
 </body>

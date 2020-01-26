@@ -42,13 +42,12 @@ app.get("/api/notes", function (req, res) {
         if (err) throw err;
         data.length = 0;
 
-        console.info("----------");
+        // console.info("----------");
         var arrNotes = JSON.parse(res);
         arrNotes.forEach(element => {
             data.push(element);
-            console.info("get::element: " + JSON.stringify(element));
+            //console.info("get::element: " + JSON.stringify(element));
         })
-
     });
     // console.info(data);
     return res.json(data);
@@ -70,8 +69,13 @@ app.post("/api/notes", function (req, res) {
 // This means you'll need to find a way to give each note a unique id when it's saved.
 // In order to delete a note, you'll need to read all notes from the db.json file,
 // remove the note with the given id property, and then rewrite the notes to the db.json file.
-app.delete("api/notes/:id", function (req, res) {
-    console.info(data);
+app.get("/api/notes/:id", function (req, res) {
+    data.splice(req.params.id - 1, 1);
+
+    fs.writeFile('./db/db.json', JSON.stringify(data), function (err) {
+        if (err) throw err;
+    });
+
     return res.json(data);
 });
 
